@@ -123,7 +123,7 @@ void queue_menu(Queue* queue) {
     }
 }
 void list_menu(List* list) {
-    int num, target, value;
+    int num, target, value, index;
     while (1) {
         printf("1.Add\n");
         printf("2.Insert\n");
@@ -131,6 +131,7 @@ void list_menu(List* list) {
         printf("4.Reverse\n");
         printf("5.Sort\n");
         printf("6.Clear\n");
+        printf("7.Find\n");
         printf("0.Back\n");
         printf("Enter your choice\n");
         scanf("%d", &num);
@@ -155,18 +156,17 @@ void list_menu(List* list) {
                 printf("\n");
             }
             else {
-                printf("Insert (target value): ");
-                scanf("%d", &target);
-                printf("Next value to target: ");
+                printf("Insert Index: ");
+                scanf("%d", &index);
+                printf("Insert value: ");
                 scanf("%d", &value);
-                Node* targetnode = find(list, target);
-                if (targetnode == NULL) {
-                    printf("Target node not found!\n");
+                if (index > list->size) {
+                    printf("enter again\n");
                     print_list(list);
                     printf("\n");
                 }
                 else {
-                    insert(list, targetnode, value);
+                    insert(list, index, value);
                     print_list(list);
                     printf("\n");
                 }
@@ -179,16 +179,15 @@ void list_menu(List* list) {
                 printf("\n");
             }
             else {
-                printf("Erase target: ");
-                scanf("%d", &target);
-                Node* targetnode = find(list, target);
-                if (targetnode == NULL) {
-                    printf("Target node not found!\n");
+                printf("Erase Index: ");
+                scanf("%d", &index);
+                if (index > list->size) {
+                    printf("Cannot Erase\n");
                     print_list(list);
                     printf("\n");
                 }
                 else {
-                    erase(list, targetnode);
+                    erase(list, index);
                     print_list(list);
                     printf("\n");
                 }
@@ -232,6 +231,18 @@ void list_menu(List* list) {
             printf("Clear\n");
             break;
 
+        case 7:
+            if (list->size == 0) {
+                printf("Empty");
+                printf("\n");
+            }
+            else {
+                printf("Find target: ");
+                scanf("%d", &target);
+                find(list, target);
+            }
+            break;
+
         default:
             printf("Invalid choice\n");
         }
@@ -248,7 +259,7 @@ int main(void) {
     init_queue(&queue);
     initialize(&list);
 
-    int num, temp, target, value;
+    int num, temp, target, value, index;
 
     while (1) {
         printf("MENU\n");

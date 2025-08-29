@@ -24,59 +24,59 @@ void add(List* list, int value) {
 	++list->size;
 }
 
-void insert(List* list, Node* target, int value) {
+void insert(List* list, int index, int value) {
 	if (list->size != 0) {
 		Node* new = (Node*)malloc(sizeof(Node));
 		new->data = value;
-		if (target->next == NULL) {
-			target->next = new;
-			new->next = NULL;
-			list->tail = new;
-			++list->size;
+		Node* pre = NULL;
+		Node* cur = list->head;
+		for (int i = 0; i < index; i++) {
+			pre = cur;
+			cur = cur->next;
 		}
-		else {
-			new->next = target->next;
-			target->next = new;
-			++list->size;
-		}
+		new->next = cur->next;
+		cur->next = new;
+		if (new->next == NULL) list->tail = new;
+		++list->size;
 	}
 }
 
-void erase(List* list, Node* target) {
+void erase(List* list, int index) {
 	if (list->size != 0) {
-		if (list->head == target) {
-			list->head = target->next;
-			if (list->tail == target) {
-				list->tail = NULL;
-			}
-			free(target);
-			--list->size;
-		}
-
+		Node* pre = NULL;
 		Node* cur = list->head;
-		while (cur->next != NULL && cur->next != target) {
+		for (int i = 0; i < index; i++) {
+			pre = cur;
 			cur = cur->next;
 		}
-
-		if (cur->next == target) {
-			cur->next = target->next;
-			if (list->tail == target)
-				list->tail = cur;
-			free(target);
-			--list->size;
+		if (pre == NULL) {
+			list->head = cur->next;
 		}
+		else {
+			pre->next = cur->next;
+		}
+		if (cur == list->tail) list->tail = pre;
+		free(cur);
+		--list->size;
 	}
 }
 
 Node* find(List* list, int target) {
 	Node* cur = list->head;
+	int index = 0;
+	int found = 0;
 	while (cur != NULL) {
 		if (cur->data == target) {
-			return cur;
+			printf("index %d ", index);
+			found = 1;
 		}
 		cur = cur->next;
+		index++;
 	}
-	return NULL;
+	if (!found) {
+		printf("Target node not found\n");
+	}
+	printf("\n");
 }
 
 void reverse(List* list) {

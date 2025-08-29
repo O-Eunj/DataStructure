@@ -14,8 +14,8 @@ typedef struct list {
 
 void initialize(List* list);
 void add(List* list, int value);
-void insert(List* list, Node* target, int value);
-void erase(List* list, Node* target);
+void insert(List* list, int index, int value);
+void erase(List* list, int index);
 Node* find(List* list, int target);
 void reverse(List* list);
 void sort(List* list);
