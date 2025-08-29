@@ -61,7 +61,7 @@ void erase(List* list, int index) {
 	}
 }
 
-Node* find(List* list, int target) {
+void find(List* list, int target) {
 	Node* cur = list->head;
 	int index = 0;
 	int found = 0;

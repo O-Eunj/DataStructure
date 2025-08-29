@@ -16,7 +16,7 @@ void initialize(List* list);
 void add(List* list, int value);
 void insert(List* list, int index, int value);
 void erase(List* list, int index);
-Node* find(List* list, int target);
+void find(List* list, int target);
 void reverse(List* list);
 void sort(List* list);
 void clear(List* list);
